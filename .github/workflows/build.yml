@@ -19,6 +19,15 @@ jobs:
         with:
           version: release/v4.3
 
+      - name: 自动开启车床+刀具表全套功能
+        run: |
+          sed -i 's/#define N_TOOLS.*/#define N_TOOLS 16/' main/grbl/config.h
+          sed -i 's/#define TOOL_RADIUS_COMPENSATION.*/#define TOOL_RADIUS_COMPENSATION 1/' main/grbl/config.h
+          sed -i 's/#define G43_SUPPORT.*/#define G43_SUPPORT 1/' main/grbl/config.h
+          sed -i 's/#define G71_SUPPORT.*/#define G71_SUPPORT 1/' main/grbl/config.h
+          sed -i 's/#define G76_SUPPORT.*/#define G76_SUPPORT 1/' main/grbl/config.h
+          sed -i 's/#define G96_SUPPORT.*/#define G96_SUPPORT 1/' main/grbl/config.h
+
       - name: 编译固件
         run: idf.py build
 
