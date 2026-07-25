@@ -11,7 +11,7 @@ jobs:
     container: espressif/idf:release-v4.3
     steps:
       - name: 拉取源码（包含子模块）
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           submodules: recursive
 
@@ -19,7 +19,7 @@ jobs:
         run: idf.py build
 
       - name: 打包输出固件文件
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: esp32-grblhal-lathe-firmware
           path: |
