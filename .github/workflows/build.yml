@@ -14,11 +14,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: 配置ESP-IDF v4.3编译环境
-        uses: espressif/setup-espressif-esp-idf@v1
-        with:
-          version: release/v4.3
-
       - name: 自动开启车床+刀具表全套功能
         run: |
           sed -i 's/#define N_TOOLS.*/#define N_TOOLS 16/' main/grbl/config.h
@@ -28,8 +23,10 @@ jobs:
           sed -i 's/#define G76_SUPPORT.*/#define G76_SUPPORT 1/' main/grbl/config.h
           sed -i 's/#define G96_SUPPORT.*/#define G96_SUPPORT 1/' main/grbl/config.h
 
-      - name: 编译固件
-        run: idf.py build
+      - name: 编译固件（官方ESP-IDF v4.3环境）
+        uses: docker://espressif/idf:release-v4.3
+        with:
+          args: idf.py build
 
       - name: 打包输出固件文件
         uses: actions/upload-artifact@v4
