@@ -22,10 +22,10 @@ jobs:
           sed -i 's/#define G71_SUPPORT.*/#define G71_SUPPORT 1/' main/grbl/config.h
           sed -i 's/#define G76_SUPPORT.*/#define G76_SUPPORT 1/' main/grbl/config.h
           sed -i 's/#define G96_SUPPORT.*/#define G96_SUPPORT 1/' main/grbl/config.h
-          # 新增：开启报警解锁指令 $X，解决上电卡死问题
-          sed -i 's/#define ENABLE_ALARM_UNLOCK.*/#define ENABLE_ALARM_UNLOCK 1/' main/grbl/config.h
-          # 新增：开启回零指令 $H，备用解锁方式
-          sed -i 's/#define ENABLE_HOMING.*/#define ENABLE_HOMING 1/' main/grbl/config.h
+          # 新增：启用报警解锁指令，让$X命令正常生效
+          sed -i '/ENABLE_ALARM_UNLOCK/s/.*/#define ENABLE_ALARM_UNLOCK 1/' main/grbl/config.h
+          # 新增：禁用硬件急停检测，解决上电ALARM10锁死、$X报error79
+          sed -i '/ENABLE_ESTOP/s/.*/#define ENABLE_ESTOP 0/' main/grbl/config.h
 
       - name: 编译固件（官方ESP-IDF v4.3环境）
         uses: docker://espressif/idf:release-v4.3
